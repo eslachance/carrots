@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+		<title>Title</title>
+	</head>
+  <body>
+  <% if(auth.logged) { %>
+    <strong>Logged In As: </strong><%= auth.name %><br>
+    <a href="/logout">Logout</a>
+    <% if(auth.admin){%> <br/><a href="/admin">Administration</a><%}%>
+  <% } else { %>
+    <a href="/login">Login</a>
+  <% } %>

@@ -1,0 +1,14 @@
+<%- include('blocks/header', {path, auth}) %>
+<h1>Blog Posts</h1>
+
+			<% articles.forEach(el => {%>
+				<article>
+					<h1><a href="/view/<%= el.id %>"><%= el.title %></a></h1>
+					<%= el.user.name %> - <%= el.date %>
+					<br>
+					<%- el.content %>
+				</article>
+				<hr>
+			<% }); %>
+
+<% include ./blocks/footer %>

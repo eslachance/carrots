@@ -19,6 +19,7 @@
     "express-session": "^1.15.6",
     "helmet": "^3.13.0",
     "memorystore": "^1.6.0",
+    "request-ip": "^2.1.1",
     "xss": "^1.0.3"
   }
 }

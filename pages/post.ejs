@@ -1,0 +1,10 @@
+<%- include('blocks/header', {path}) %>
+<h1><%= article.title %></h1>
+
+				<article>
+					<%= user.name %> - <%= article.date %>
+					<br>
+					<%- article.content %>
+				</article>
+
+<% include ./blocks/footer %>

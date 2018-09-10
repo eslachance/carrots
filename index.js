@@ -32,10 +32,21 @@ var bodyParser = require("body-parser");
 app.use(bodyParser.json());       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
   extended: true
-})); 
+}));
+
+const requestIp = require('request-ip');
+app.use(requestIp.mw())
 
 app.engine("html", require("ejs").renderFile);
 app.set("view engine", "html");
+
+app.use((req, res, next) => {
+  // General Logging Task
+  console.log(`${req.clientIp} : ${req.url} : ${Date.now()}`);
+  fs.writeFileSync("./req.json", require("util").inspect(req));
+  fs.writeFileSync("./res.json", require("util").inspect(res));
+  next();
+})
 
 app.use("/", root);
 app.use("/admin", admin);
