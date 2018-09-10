@@ -23,6 +23,17 @@ app.get("/add", (req, res, next) => {
   res.send("ok");
 })
 
+app.get("/adduser", (req, res, next) => {
+  db.newuser("evie", "Evelyne", "abc123");
+  res.send("ok");
+});
+
+app.get("/fix", (req, res) =>{
+  db.articles.filter(a=>!!a.title).forEach(article => {
+    db.articles.set(article.id, "evie", "user");
+  })
+})
+
 app.get("/edit/:id", (req, res, next) => {
   db.articles.set(req.params.id, "Edited Title", "title");
   res.send("ok");

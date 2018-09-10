@@ -1,6 +1,5 @@
-const Enmap = require("../enmap");
+const Enmap = require("enmap");
 const bcrypt = require("bcrypt");
-const config = require("./config.json");
 
 exports.users = new Enmap({name: "users"});
 exports.articles = new Enmap({name: "articles"});
@@ -15,7 +14,7 @@ exports.login = (username, password) => {
 
 exports.newuser = (username, name, plainpw) => {
   if (this.users.has(username)) throw Error(`User ${username} already exists!`);
-  bcrypt.hash(plainpw, config.saltRounds || 10, (err, password) => {
+  bcrypt.hash(plainpw, 10, (err, password) => {
     if (err) throw err;
     this.users.set(username, {
       username, name, password
