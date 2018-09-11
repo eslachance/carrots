@@ -1,5 +1,6 @@
 <%- include('../blocks/header', {path, auth}) %>
 			<h2>Administration</h2>
+			<div><a href="/admin/add">Add Article</a></div>
 			<% articles.forEach(el => {%>
 				<article>
 					<div class="article title"><a href="/view/<%= el.id %>"><%= el.title %></a></div><br/>

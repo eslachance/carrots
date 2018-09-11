@@ -19,9 +19,17 @@ app.get("/logs", (req, res) => {
 });
 
 app.get("/add", (req, res) => {
+  res.render(resolve(`${templateDir}${sep}admin${sep}addpost.ejs`), { path: req.path, auth: req.session });
+});
+
+app.post("/add", (req, res) => {
   const id = db.articles.autonum;
   db.articles.set(id, {
-    id, content: "This is test content", title: "Article Title", date: Date.now(), user: 1
+    id, content: req.body.content,
+    title: req.body.title,
+    published: false,
+    date: Date.now(),
+    user: req.session.username
   });
   res.send("ok");
 });
