@@ -6,15 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="An Express.js blog using Enmap for storage">
     <meta name="author" content="Évelyne Lachance">
+
+    <!-- Styling and basic things -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js" integrity="sha256-zG8v+NWiZxmjNi+CvUYnZwKtHzFtdO8cAKUIdB8+U9I=" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="/public/styles.css?v=1.0">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    
+    <!-- Markdown Editor --> 
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
+    
+    <!-- App scripts (temp) -->
     <script>
       $(function(){
         $(".longdate").text(moment($(".longdate")).fromNow());
+        var simplemde = new SimpleMDE({ element: $("#content")[0] });
       });
     </script>
+    <!-- App styles -->
+    <link rel="stylesheet" href="/public/styles.css?v=1.0">
+
 		<title>Title</title>
 	</head>
   <body>

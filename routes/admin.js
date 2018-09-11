@@ -39,10 +39,14 @@ app.get("/adduser", (req, res) => {
   res.send("ok");
 });
 
-app.get("/fix", () => {
-  db.articles.filter(a => !!a.title).forEach(article => {
-    db.articles.set(article.id, "evie", "user");
-  });
+app.get("/publish/:id", (req, res) => {
+  db.articles.set(req.params.id, true, "published");
+  res.redirect("/admin");
+});
+
+app.get("/unpublish/:id", (req, res) => {
+  db.articles.set(req.params.id, false, "published");
+  res.redirect("/admin");
 });
 
 app.get("/edit/:id", (req, res) => {

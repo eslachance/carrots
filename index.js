@@ -1,5 +1,4 @@
 const { sep, resolve } = require("path");
-const fs = require("fs");
 const http = require("http");
 // const https = require("https");
 
@@ -44,8 +43,11 @@ app.set("view engine", "html");
 app.use((req, res, next) => {
   // General Logging Task
   console.log(`${req.clientIp} : ${req.url} : ${Date.now()}`);
-  fs.writeFileSync("./req.json", require("util").inspect(req));
-  fs.writeFileSync("./res.json", require("util").inspect(res));
+  /* db.logs.set(db.logs.autonum, {
+    time: Date.now(),
+    agent: req.headers['user-agent'],
+    ip: req.clientIp
+  });*/
   next();
 });
 

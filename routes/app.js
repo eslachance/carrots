@@ -1,4 +1,5 @@
 const { sep, resolve } = require("path");
+const marked = require("marked");
 
 const dataDir = resolve(`${process.cwd()}${sep}`);
 const templateDir = resolve(`${dataDir}${sep}pages`);
@@ -10,17 +11,17 @@ const app = express.Router();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  /* db.logs.set(db.logs.autonum, {
-    time: Date.now(),
-    agent: req.headers['user-agent']
-  });*/
   const articles = db.articles.filter(a => !!a.title && a.published).array();
-  articles.forEach(a => { a.user = db.users.get(a.user); });
+  articles.forEach(a => {
+    a.user = db.users.get(a.user);
+    a.content = marked(a.content);
+  });
   res.render(resolve(`${templateDir}${sep}index.ejs`), { path: req.path, articles, auth: req.session });
 });
 
 app.get("/view/:id", (req, res) => {
   const article = db.articles.get(req.params.id);
+  article.content = marked(article.content);
   const user = db.users.get(article.user);
   res.render(resolve(`${templateDir}${sep}post.ejs`), { path: req.path, article, user, auth: req.session });
 });
