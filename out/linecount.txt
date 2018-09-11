@@ -1,0 +1,33 @@
+===============================================================================
+EXTENSION NAME : linecount
+EXTENSION VERSION : 0.1.7
+-------------------------------------------------------------------------------
+count time : 2018-09-10 21:55:42
+count workspace : d:\home\devel\test-express-enmap
+total files : 21
+total code lines : 5348
+total comment lines : 7
+total blank lines : 95
+
+.eslintrc.json, code is 151, comment is 0, blank is 5.
+.gitignore, code is 3, comment is 0, blank is 0.
+config.json, code is 5, comment is 0, blank is 0.
+db.js, code is 29, comment is 0, blank is 4.
+index.js, code is 75, comment is 2, blank is 16.
+LICENSE, code is 154, comment is 1, blank is 28.
+package-lock.json, code is 3303, comment is 0, blank is 0.
+package.json, code is 34, comment is 0, blank is 0.
+pages\admin\index.ejs, code is 10, comment is 0, blank is 0.
+pages\blocks\footer.ejs, code is 5, comment is 0, blank is 0.
+pages\blocks\header.ejs, code is 41, comment is 0, blank is 0.
+pages\index.ejs, code is 11, comment is 0, blank is 0.
+pages\login.ejs, code is 12, comment is 0, blank is 2.
+pages\post.ejs, code is 8, comment is 0, blank is 2.
+pages\user.ejs, code is 6, comment is 0, blank is 2.
+public\styles.css, code is 68, comment is 0, blank is 20.
+README.md, code is 2, comment is 0, blank is 0.
+req.json, code is 815, comment is 0, blank is 0.
+res.json, code is 558, comment is 0, blank is 0.
+routes\admin.js, code is 36, comment is 0, blank is 9.
+routes\app.js, code is 22, comment is 4, blank is 7.
+===============================================================================

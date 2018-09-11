@@ -1,42 +1,55 @@
-const fs = require("fs");
-
 const express = require("express");
 const db = require("../db.js");
-const config = require("../config.json");
+const { resolve, sep } = require("path");
 
-const app = express.Router(); //make a router
+const dataDir = resolve(`${process.cwd()}${sep}`);
+const templateDir = resolve(`${dataDir}${sep}pages`);
+
+const app = express.Router();
 app.use(express.json());
 
-app.get("/", (req, res, next) => {
-  res.json(db.articles.filter(a=>!!a.title).array());
+app.get("/", (req, res) => {
+  const articles = db.articles.filter(a => !!a.title).array();
+  articles.forEach(a => { a.user = db.users.get(a.user); });
+  res.render(resolve(`${templateDir}${sep}admin${sep}index.ejs`), { path: req.path, articles, auth: req.session });
 });
 
-app.get("/logs", (req, res, next) => {
-  res.json(db.logs.filter(l=>!!l.time).array());
-})
+app.get("/logs", (req, res) => {
+  res.json(db.logs.filter(log => !!log.time).array());
+});
 
-app.get("/add", (req, res, next) => {
+app.get("/add", (req, res) => {
   const id = db.articles.autonum;
   db.articles.set(id, {
     id, content: "This is test content", title: "Article Title", date: Date.now(), user: 1
   });
   res.send("ok");
-})
+});
 
-app.get("/adduser", (req, res, next) => {
+app.get("/adduser", (req, res) => {
   db.newuser("evie", "Evelyne", "abc123");
   res.send("ok");
 });
 
-app.get("/fix", (req, res) =>{
-  db.articles.filter(a=>!!a.title).forEach(article => {
+app.get("/fix", () => {
+  db.articles.filter(a => !!a.title).forEach(article => {
     db.articles.set(article.id, "evie", "user");
-  })
-})
+  });
+});
 
-app.get("/edit/:id", (req, res, next) => {
-  db.articles.set(req.params.id, "Edited Title", "title");
-  res.send("ok");
-})
+app.get("/edit/:id", (req, res) => {
+  const article = db.articles.get(req.params.id);
+  res.render(resolve(`${templateDir}${sep}admin${sep}editpost.ejs`), { path: req.path, article, auth: req.session });
+});
+
+app.post("/edit/", (req, res) => {
+  const article = db.articles.get(req.body.id);
+  article.published = !!req.body.published;
+  article.content = req.body.content;
+  article.title = req.body.title;
+  db.articles.set(req.body.id, article);
+  // db.articles.set(req.params.id, "Edited Title", "title");
+  res.redirect(`/admin/edit/${req.body.id}`);
+});
 
 module.exports = app;

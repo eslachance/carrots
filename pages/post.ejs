@@ -2,9 +2,16 @@
 <h1><%= article.title %></h1>
 
 				<article>
-					<%= user.name %> - <%= article.date %>
-					<br>
-					<%- article.content %>
+				<header><%= user.name %> - <span class="longdate"><%= article.date %></span></header>
+				<% if(auth.logged && auth.admin) { %>
+				  <nav><a href="/admin/edit/<%= article.id %>">Edit</a> - 
+					<% if(article.published) { %>
+						<a href="/admin/unpublish/<%= article.id %>">Unpublish</a>
+					<% } else { %>
+							<a href="/admin/publish/<%= article.id %>">Publish</a>
+					<% } %><br/></nav>
+				<% } %>
+			  <summary><%- article.content %></summary>
 				</article>
 
 <% include ./blocks/footer %>

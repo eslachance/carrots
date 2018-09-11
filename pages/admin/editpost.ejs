@@ -1,0 +1,22 @@
+<%- include('../blocks/header', {path, auth}) %>
+			<h2>Edit Post</h2>
+			<form method="POST" action="/admin/edit">
+      <input type="hidden" name="id" id="id" value="<%= article.id %>" />
+      <div>
+      <input type="checkbox" id="published" name="published"
+        value="published" <% if(article.published) { %>checked<% } %> />
+        <label for="published">Published</label>
+      </div>
+      <div>
+      <label for="title">Article Title: 
+      <input type="text" id="title" name="title" value="<%= article.title %>" />
+      </label>
+      </div>
+      <div>
+      <label for="content">
+      <textarea id="content" name="content"><%= article.content %></textarea>
+      </label>
+      </div>
+      <button type="submit">Save</button>
+      </form>
+<% include ../blocks/footer %>

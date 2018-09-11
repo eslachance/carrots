@@ -4,13 +4,38 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="An Express.js blog using Enmap for storage">
+    <meta name="author" content="Évelyne Lachance">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.1/moment.min.js" integrity="sha256-zG8v+NWiZxmjNi+CvUYnZwKtHzFtdO8cAKUIdB8+U9I=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/public/styles.css?v=1.0">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script>
+      $(function(){
+        $(".longdate").text(moment($(".longdate")).fromNow());
+      });
+    </script>
 		<title>Title</title>
 	</head>
   <body>
-  <% if(auth.logged) { %>
-    <strong>Logged In As: </strong><%= auth.name %><br>
-    <a href="/logout">Logout</a>
-    <% if(auth.admin){%> <br/><a href="/admin">Administration</a><%}%>
-  <% } else { %>
-    <a href="/login">Login</a>
-  <% } %>
+  <a name="top"></a>
+  <div class="wrapper">
+    <div class="box header">
+      <div class="branding">
+        <div class="logo"></div>
+        <div class="title"><a href="/">Blog Name</a></div>
+      </div>
+      <div class="navigation">
+        <ul>
+          <% if(auth.logged) { %>
+            <li><a href="/logout">Logout</a></li>
+            <% if(auth.admin){%><li><a href="/admin">Admin</a></li><%}%>
+          <% } else { %>
+            <li><a href="/login">Login</a></li>
+          <% } %>
+          <li><a href="#" class="logged"><%= auth.name %></a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="box sidebar">Sidebar</div>
+    <div class="box content">
