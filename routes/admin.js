@@ -31,7 +31,20 @@ app.post("/add", (req, res) => {
     date: Date.now(),
     user: req.session.username
   });
-  res.send("ok");
+  res.redirect(`/admin/edit/${id}`);
+});
+
+app.get("/adduser", (req, res) => {
+  res.render(resolve(`${templateDir}${sep}admin${sep}adduser.ejs`), { path: req.path, auth: req.session });
+});
+
+app.post("/adduser", (req, res) => {
+  db.newuser(req.body.username, req.body.name, req.body.password, req.body.admin === "on");
+  res.redirect("/admin");
+});
+
+app.get("/users", (req, res) => {
+  res.json(db.users.values());
 });
 
 app.get("/publish/:id", (req, res) => {

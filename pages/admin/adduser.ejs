@@ -1,0 +1,33 @@
+<%- include('../blocks/header', {path, auth}) %>
+			<form method="POST" action="/admin/adduser">
+      <fieldset>
+        <legend>Create New User</legend>
+        <div class="dynamic-width">
+          <label for="username">Username: 
+            <input type="text" name="username" id="username" placeholder="Sometimes you just wanna make an account">
+          </label>
+        </div>
+        <div class="dynamic-width">
+          <label for="name">Display Name: 
+          <input type="text" name="name" id="name" placeholder="Where everybody knows your naaaaaaame!">
+          </label>
+        </div>
+        <div class="dynamic-width">
+          <label for="password">Password: 
+          <input type="password" name="password" id="password" placeholder="And your password's always the saaaaaame!">
+          </label>
+          <div id="password-strength"><span id="password-strength-text">Strength</span><div id="password-strength-meter"></div></div>
+        </div>
+			</fieldset>
+      <fieldset>
+			<legend>Additional Options</legend>
+			<div class="input-checkbox">
+				<label for="admin">
+				<input name="admin" id="admin" type="checkbox" value="on">
+				Administrator Account
+				</label>
+			</div>
+			</fieldset>
+      <button type="submit" class="pretty-button">Create</button>
+      </form>
+<% include ../blocks/footer %>

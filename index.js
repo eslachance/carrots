@@ -118,8 +118,8 @@ app.post("/install", (req, res, next) => {
     db.settings.set(field, req.body[field]);
   });
   db.settings.set("init", true);
-  db.settings.set("commentsEnabled", (req.body.enableComments === "on"));
-  db.settings.set("registrationEnabled", (req.body.enableRegistration === "on"));
+  db.settings.set("commentsEnabled", req.body.enableComments === "on");
+  db.settings.set("registrationEnabled", req.body.enableRegistration === "on");
 
   db.newuser(req.body.username, req.body.name, req.body.password, true);
 
