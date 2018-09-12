@@ -13,5 +13,11 @@
 				<% } %>
 			  <summary><%- article.content %></summary>
 				</article>
+				<div class="comments-wrapper">
+				<% comments.forEach(comment => {%>
+					<div class="comment-author"><%= comment.user %> - <span class="longdate comment-date"><%= comment.timestamp %></span></div>
+					<div class="comment-content"><%= comment.content %></div>
+				<% }); %>
+				</div>
 
 <% include ./blocks/footer %>

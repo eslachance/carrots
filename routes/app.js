@@ -23,7 +23,8 @@ app.get("/view/:id", (req, res) => {
   const article = db.articles.get(req.params.id);
   article.content = marked(article.content);
   const user = db.users.get(article.user);
-  res.render(resolve(`${templateDir}${sep}post.ejs`), { path: req.path, article, user, auth: req.session });
+  const comments = db.comments.filter(comment => comment.parent === article.id);
+  res.render(resolve(`${templateDir}${sep}post.ejs`), { path: req.path, article, user, comments, auth: req.session });
 });
 
 app.get("/user/:user", (req, res) => {

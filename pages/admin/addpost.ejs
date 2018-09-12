@@ -1,11 +1,11 @@
 <%- include('../blocks/header', {path, auth}) %>
 			<h2>Create Post</h2>
 			<form method="POST" action="/admin/add">
-      <div>
-      <label for="title">Article Title: 
-      <input type="text" id="title" name="title" value="" />
-      </label>
-      </div>
+      <div class="dynamic-width">
+				<label for="password">Article Title: 
+				<input type="text" id="title" name="title" placeholder="Some inspiring title"/>
+				</label>
+			</div>
       <div>
       <label for="content">
       <textarea id="content" name="content"></textarea>

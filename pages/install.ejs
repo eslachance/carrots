@@ -1,0 +1,77 @@
+<%- include('blocks/header', {path, auth}) %>
+      <h1>Welcome to Express-Enmap!</h1>
+
+			<p>If you're reading this it means you've successfully installed this system and
+			are ready to proceed with initialization. Please fill in the following information
+			in order to complete the process!</p>
+			<form action="/install" method="POST">
+			<fieldset>
+			<legend>Site Configuration</legend>
+			<div class="dynamic-width">
+				<label for="title">Title/Name: 
+				<input type="text" name="title" id="title" placeholder="My Site Name">
+				<span style="display:none"></span>
+				</label>
+			</div>
+			<div class="dynamic-width">
+				<label for="description">Description: 
+				<input type="text" name="description" id="description" placeholder="A blog made of pure awesomeness.">
+				<span style="display:none"></span>
+				</label>
+			</div>
+			<div class="dynamic-width">
+				<label for="title">Site Author: 
+				<input type="text" name="author" id="author" placeholder="Évelyne Lachance">
+				<span style="display:none"></span>
+				</label>
+			</div>
+			</fieldset>
+
+			<fieldset>
+			<legend>Default Admin User</legend>
+			<div class="dynamic-width">
+				<label for="username">Username: 
+				<input type="text" name="username" id="username" placeholder="Sometimes you just wanna make an account">
+				<span style="display:none"></span>
+				</label>
+			</div>
+			<div class="dynamic-width">
+				<label for="name">Display Name: 
+				<input type="text" name="name" id="name" placeholder="Where everybody knows your naaaaaaame!">
+				<span style="display:none"></span>
+				</label>
+			</div>
+			<div class="dynamic-width">
+				<label for="password">Password: 
+				<input type="password" name="password" id="password" placeholder="And your password's always the saaaaaame!">
+				<span style="display:none"></span>
+				</label>
+				<div id="password-strength"><span id="password-strength-text">Strength</span><div id="password-strength-meter"></div></div>
+			</div>
+
+			</fieldset>
+
+			<fieldset>
+			<legend>Additional Options</legend>
+			<div class="input-checkbox">
+				<label for="enableComments">
+				<input name="enableComments" id="enableComments" type="checkbox" value="on" checked>
+				Enable Comments 
+				</label>
+			</div>
+			<div class="input-checkbox">
+				<label for="enableRegistration">
+				<input name="enableRegistration" id="enableRegistration" type="checkbox" value="on" checked>
+				Enable Registration
+				</label>
+			</div>
+			<div class="input-checkbox">
+				<label for="examples">
+				<input name="examples" id="examples" type="checkbox" value="on" checked>
+				Create example posts and comments
+				</label>
+			</div>
+			</fieldset>
+			<button type="submit" class="pretty-button">ENGAGE!</button>
+		</form>
+<% include ./blocks/footer %>

@@ -34,11 +34,6 @@ app.post("/add", (req, res) => {
   res.send("ok");
 });
 
-app.get("/adduser", (req, res) => {
-  db.newuser("evie", "Evelyne", "abc123");
-  res.send("ok");
-});
-
 app.get("/publish/:id", (req, res) => {
   db.articles.set(req.params.id, true, "published");
   res.redirect("/admin");

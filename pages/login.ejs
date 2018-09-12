@@ -1,14 +1,22 @@
 <%- include('blocks/header', {path}) %>
-<h1>Login</h1>
-
 <form method="POST">
-<label for="username">Username:
-	<input type="text" id="username" name="username" />
-	</label>
-	<label for="password">Password:
-	<input type="password" id="password" name="password" />
-	</label>
-	<button type="submit">Login</button>
+			<fieldset>
+			<legend>Login</legend>
+			<div class="dynamic-width">
+				<label for="username">Username: 
+				<input type="text" name="username" id="username">
+				<span style="display:none"></span>
+				</label>
+			</div>
+			<div class="dynamic-width">
+				<label for="password">Password: 
+				<input type="password" name="password" id="password">
+				<span style="display:none"></span>
+				</label>
+			</div>
+
+			</fieldset>
+	<button type="submit" class="pretty-button">Login</button>
 </form>
 
 <% include ./blocks/footer %>

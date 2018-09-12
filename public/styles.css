@@ -91,3 +91,100 @@ textarea {
     max-width: 85%;
   }
 }
+
+input[type=text], input[type=password] {
+  background-color: transparent; /* Remove background fill */
+  border-radius: 0; /* Remove corner curve */
+  border: 2px solid #425E72; /* 2px color border */
+  color: #425E72; /* White text */
+  height: 45px; /* Increase input height */
+  min-width: 300px;
+  padding: 0 10px;
+  margin-top: 0;
+}
+
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+  color:    #425E72;
+}
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+ color:    #425E72;
+ opacity:  1;
+}
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+ color:    #425E72;
+ opacity:  1;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+ color:    #425E72;
+}
+::-ms-input-placeholder { /* Microsoft Edge */
+ color:    #425E72;
+}
+
+.pretty-button {
+  background-color: #425E72; /* Remove background fill */
+  border-radius: 0; /* Remove corner curve */
+  border: 2px solid #425E72; /* 2px color border */
+  color: #fff; /* White text */
+  height: 45px; /* Increase input height */
+  padding: 0 10px;
+  margin-top: 0;
+  font-weight: bold;
+  font-size: 1.5em;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.dynamic-width > label {
+  display: inline-block;
+  width: 150px;
+  margin-top: 15px;
+}
+
+fieldset {
+  margin: 20px 0;
+}
+
+input[type=checkbox] {
+	-webkit-appearance: none;
+	background-color: #fafafa;
+	border: 1px solid #cacece;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+  padding: 9px;
+	border-radius: 3px;
+	display: inline-block;
+  position: relative;
+  top: 5px;
+}
+
+input[type=checkbox]:active, input[type=checkbox]:checked:active {
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+input[type=checkbox]:checked {
+	background-color: #e9ecee;
+	border: 1px solid #adb8c0;
+	box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1);
+	color: #99a1a7;
+}
+
+input[type=checkbox]:checked:after {
+	content: '\2714';
+	font-size: 14px;
+	position: absolute;
+	top: 0px;
+	left: 3px;
+	color: #99a1a7;
+}
+
+#password-strength {
+  color: grey;
+  margin-top: 5px;
+  width: 325px;
+}
+
+#password-strength-meter {
+  background: grey;
+  height: 3px;
+  width: 50%;
+  margin: 0;
+}
