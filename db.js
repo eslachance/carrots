@@ -1,4 +1,4 @@
-const Enmap = require("enmap");
+const Enmap = require("../enmap");
 const bcrypt = require("bcrypt");
 
 exports.users = new Enmap({ name: "users" });

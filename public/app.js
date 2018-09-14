@@ -1,11 +1,18 @@
 /* eslint-disable */
 $(function(){
-  $(".longdate").each(function(index, elem) {
-    $(elem).text(moment($(elem)).fromNow());
-  });
+  var dates = document.getElementsByClassName("longdate");
+  for(var i = 0; i < dates.length; i++) {
+    var elem = dates.item(i).textContent;
+    var date = moment(Number(elem)).fromNow();
+    console.log(date);
+    dates.item(i).innerHTML = date;
+  }
 
   if($("#content").length) {
-    var simplemde = new SimpleMDE({ element: $("#content")[0] });
+    new SimpleMDE({ element: $("#content")[0] });
+  }
+  if($("#new-comment").length) {
+    new SimpleMDE({ element: $("#new-comment")[0] });
   }
 
   // https://stackoverflow.com/questions/948172/password-strength-meter

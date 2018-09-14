@@ -1,23 +1,40 @@
 <%- include('blocks/header', {path}) %>
 <h1><%= article.title %></h1>
 
-				<article>
-				<header><%= user.name %> - <span class="longdate"><%= article.date %></span></header>
-				<% if(auth.logged && auth.admin) { %>
-				  <nav><a href="/admin/edit/<%= article.id %>">Edit</a> - 
-					<% if(article.published) { %>
-						<a href="/admin/unpublish/<%= article.id %>">Unpublish</a>
-					<% } else { %>
-							<a href="/admin/publish/<%= article.id %>">Publish</a>
-					<% } %><br/></nav>
-				<% } %>
-			  <summary><%- article.content %></summary>
+				<div class="post-info"><%= article.user.name %> - <span class="longdate"><%= article.date %></span></div>
+				<article class="post">
+					<header><a href="/view/<%= article.id %>"><%= article.title %></a></header>
+					<main class="post"><%- article.content %></main>
+					<footer class="post">
+					  <div class="post-actions">
+							<% if(auth.logged && auth.admin) { %>
+								<nav><a href="/admin/edit/<%= article.id %>">Edit</a> - 
+								<% if(article.published) { %>
+									<a href="/admin/unpublish/<%= article.id %>">Unpublish</a>
+								<% } else { %>
+										<a href="/admin/publish/<%= article.id %>">Publish</a>
+								<% } %><br/></nav>
+							<% } %>
+						</div>
+					  <div class="post-commentcount"><%= article.commentCount %> Comments</div>
+					</footer>
 				</article>
 				<div class="comments-wrapper">
+				<% if(auth.logged) { %>
+					<div class="add-comment">
+						<form action="/addcomment" method="POST">
+						<label for="new-comment">Create Comment
+							<textarea id="new-comment" name="new-comment"></textarea>
+						</label>
+						<button class="pretty-button" type="submit">Comment</button>
+						</form>
+					</div>
+				<% } else { %>
+					<a href="/login">Login</a> or <a href="/register">Register</a> to post a comment.
+				<% } %>
 				<% comments.forEach(comment => {%>
 					<div class="comment-author"><%= comment.user %> - <span class="longdate comment-date"><%= comment.timestamp %></span></div>
 					<div class="comment-content"><%= comment.content %></div>
 				<% }); %>
-				</div>
 
 <% include ./blocks/footer %>

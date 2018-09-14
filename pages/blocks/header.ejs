@@ -38,11 +38,18 @@
             <li><a href="/logout">Logout</a></li>
             <% if(auth.admin){%><li><a href="/admin">Admin</a></li><%}%>
           <% } else { %>
+            <li><a href="/register">Register</a></li>
             <li><a href="/login">Login</a></li>
           <% } %>
           <li><a href="#" class="logged"><%= auth.name %></a></li>
         </ul>
       </div>
     </div>
-    <div class="box sidebar">Sidebar</div>
+    <div class="box sidebar">
+      <% if(path.includes("admin") && auth.admin) { %>
+        <%- include('../blocks/admin-sidebar', {path, auth}) %>
+      <% } else { %>
+      sidebar
+      <% } %>
+    </div>
     <div class="box content">

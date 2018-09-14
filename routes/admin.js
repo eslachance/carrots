@@ -11,7 +11,7 @@ app.use(express.json());
 app.get("/", (req, res) => {
   const articles = db.articles.filter(a => !!a.title).array();
   articles.forEach(a => { a.user = db.users.get(a.user); });
-  res.render(resolve(`${templateDir}${sep}admin${sep}index.ejs`), { path: req.path, articles, auth: req.session });
+  res.render(resolve(`${templateDir}${sep}admin${sep}index.ejs`), { path: req.originalUrl, articles, auth: req.session });
 });
 
 app.get("/logs", (req, res) => {
@@ -19,7 +19,7 @@ app.get("/logs", (req, res) => {
 });
 
 app.get("/add", (req, res) => {
-  res.render(resolve(`${templateDir}${sep}admin${sep}addpost.ejs`), { path: req.path, auth: req.session });
+  res.render(resolve(`${templateDir}${sep}admin${sep}addpost.ejs`), { path: req.originalUrl, auth: req.session });
 });
 
 app.post("/add", (req, res) => {
@@ -35,7 +35,7 @@ app.post("/add", (req, res) => {
 });
 
 app.get("/adduser", (req, res) => {
-  res.render(resolve(`${templateDir}${sep}admin${sep}adduser.ejs`), { path: req.path, auth: req.session });
+  res.render(resolve(`${templateDir}${sep}admin${sep}adduser.ejs`), { path: req.originalUrl, auth: req.session });
 });
 
 app.post("/adduser", (req, res) => {
@@ -59,7 +59,7 @@ app.get("/unpublish/:id", (req, res) => {
 
 app.get("/edit/:id", (req, res) => {
   const article = db.articles.get(req.params.id);
-  res.render(resolve(`${templateDir}${sep}admin${sep}editpost.ejs`), { path: req.path, article, auth: req.session });
+  res.render(resolve(`${templateDir}${sep}admin${sep}editpost.ejs`), { path: req.originalUrl, article, auth: req.session });
 });
 
 app.post("/edit/", (req, res) => {
