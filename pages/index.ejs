@@ -1,6 +1,6 @@
 <%- include('blocks/header', {path, auth}) %>
 			<% articles.forEach(el => {%>
-				<div class="post-info"><%= el.user.name %> - <span class="longdate"><%= el.date %></span></div>
+				<div class="post-info"><a href="/user/<%= el.user.username %>"><%= el.user.name %></a> - <span class="longdate"><%= el.date %></span></div>
 				<article class="post">
 					<header><a href="/view/<%= el.id %>"><%= el.title %></a></header>
 					<main class="post"><%- el.content %></main>

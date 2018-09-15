@@ -5,4 +5,11 @@
 					<%= user.username %>
 				</article>
 
+				<h2><%= articles.size %> articles</h2>
+				<ul>
+				<% articles.forEach(el => { %>
+				  <li>View : <a href="/view/<%= el.id %>"><%= el.title %></a></li>
+				<% }); %>
+				</ul>
+
 <% include ./blocks/footer %>

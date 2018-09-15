@@ -1,5 +1,5 @@
 {
-  "name": "test-express-enmap",
+  "name": "enmap-express",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "Apache2.0",
   "dependencies": {
     "bcrypt": "^3.0.0",
     "better-sqlite-pool": "^0.1.2",

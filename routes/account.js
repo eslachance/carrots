@@ -12,6 +12,14 @@ app.use(express.json());
 
 // Login/Logout Features
 
+app.get(["/user/:id", "/user"], (req, res) => {
+  const user = db.users.get(req.params.id || req.session.username);
+  if (!user) return res.redirect("/login");
+  const comments = db.comments.filter(comment => !!comment.id && comment.user === user.username);
+  const articles = db.articles.filter(article => !!article.id && article.user === user.username);
+  res.render(resolve(`${templateDir}${sep}user.ejs`), { path: req.path, user, articles, comments, auth: req.session });
+});
+
 app.get("/register", (req, res) => {
   res.render(resolve(`${templateDir}${sep}register.ejs`), { path: req.path, auth: req.session });
 });
