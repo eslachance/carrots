@@ -8,6 +8,7 @@ const session = require("express-session");
 const SQLiteStore = require("connect-sqlite3")(session);
 const helmet = require("helmet");
 const dataDir = resolve(`${process.cwd()}${sep}`);
+const templateDir = resolve(`${dataDir}${sep}pages`);
 
 const db = require("./db.js");
 const config = require("./config.json");
@@ -20,12 +21,15 @@ const app = express();
 app.use(express.json());
 app.use("/public", express.static(resolve(`${dataDir}${sep}public`)));
 
-app.use(express.session({
-  store: new SQLiteStore,
+app.use(session({
+  store: new SQLiteStore({
+    dir: "./data"
+  }),
   secret: config.secret,
-  cookie: { maxAge: 14 * 24 * 60 * 60 * 1000 }
+  cookie: { maxAge: 14 * 24 * 60 * 60 * 1000 },
+  resave: false,
+  saveUninitialized: false
 }));
-
 
 app.use(helmet());
 const bodyParser = require("body-parser");
@@ -71,5 +75,14 @@ const checkAdmin = (req, res, next) => {
 
 app.use("/admin", checkAdmin, admin);
 
+// Handle 404
+app.use((req, res) => {
+  res.render(resolve(`${templateDir}${sep}404.ejs`), { path: req.originalUrl, auth: req.session });
+});
+
+// Handle 500
+app.use((error, req, res) => {
+  res.send("500: Internal Server Error", 500);
+});
 
 http.createServer(app).listen(config.port);
