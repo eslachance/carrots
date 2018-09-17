@@ -16,6 +16,8 @@ const config = require("./config.json");
 const root = require("./routes/app.js");
 const admin = require("./routes/admin.js");
 const account = require("./routes/account.js");
+const json = require("./routes/json.js");
+const api = require("./routes/api.js");
 
 const app = express();
 app.use(express.json());
@@ -65,6 +67,8 @@ app.use((req, res, next) => {
 
 app.use("/", root);
 app.use("/", account);
+app.use("/json", json);
+app.use("/api", api);
 
 const checkAdmin = (req, res, next) => {
   if (!req.session.admin) {

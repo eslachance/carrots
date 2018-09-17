@@ -9,9 +9,7 @@ const app = express.Router();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  const articles = db.articles.filter(a => !!a.title).array();
-  articles.forEach(a => { a.user = db.users.get(a.user); });
-  res.render(resolve(`${templateDir}${sep}admin${sep}index.ejs`), { path: req.originalUrl, articles, auth: req.session });
+  res.render(resolve(`${templateDir}${sep}admin${sep}index.ejs`), { path: req.originalUrl, articles: db.getArticles(false), auth: req.session });
 });
 
 app.get("/logs", (req, res) => {
