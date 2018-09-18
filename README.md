@@ -35,6 +35,8 @@ You also have to copy `config.json.example` to `config.json` and edit its conten
 
 Once you've saved the config.json file, simply run `node .` and it should start the blog server.
 
+- Visit [http://localhost:8080/install](http://localhost:8080/install) to finish the installation process.
+
 ## Additional Utilities
 
 There are 2 useful tools you might want to consider for use with this module. 
