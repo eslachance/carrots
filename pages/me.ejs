@@ -1,0 +1,45 @@
+<%- include('blocks/header', {path}) %>
+<h1><%= user.name %></h1>
+<% console.log(user) %>
+			<form method="POST" action="/register">
+      <fieldset>
+        <legend>Account Settings</legend>
+        <div class="dynamic-width">
+          <label for="username">Username: 
+            <input type="text" name="username" id="username" value="<%- user.username %>" disabled> (cannot be changed)
+          </label>
+        </div>
+        <div class="dynamic-width">
+          <label for="name">Display Name: 
+          <input type="text" name="name" id="name" value="<%- user.name %>">
+          </label>
+        </div>
+        <div class="dynamic-width">
+          <label for="password">Change Password: 
+          <input type="password" name="password" id="password">
+          </label>
+          <div id="password-strength"><span id="password-strength-text">Strength</span><div id="password-strength-meter"></div></div>
+        </div>
+			</fieldset>
+      <button type="submit" class="pretty-button">Save Changes</button>
+			<fieldset>
+				<legend>Blog API</legend>
+        <div class="dynamic-width">
+          <label for="username">API Token: 
+            <input type="text" name="username" id="username" value="<%- user.apiToken %>">
+          </label>
+        </div>
+				<a href="/api/genkey"><% if(user.apiToken) { %>Reset<% } else { %>Generate<% } %> Token</a>
+			</fieldset>
+      </form>
+			<fieldset>
+				<legend>Article Management</legend>
+				<h2><%= articles.size %> articles</h2>
+				<ul>
+				<% articles.forEach(el => { %>
+				  <li>View : <a href="/view/<%= el.id %>"><%= el.title %></a></li>
+				<% }); %>
+				</ul>
+			</fieldset>
+
+<% include ./blocks/footer %>
