@@ -3,14 +3,14 @@
 			<div><a href="/admin/add">Add Article</a></div>
 			<% articles.forEach(el => {%>
 				<article>
-					<div class="article title"><a href="/view/<%= el.id %>"><%= el.title %></a></div><br/>
+					<header><a href="/view/<%= el.id %>"><%= el.title %></a></header>
 					<a href="/admin/edit/<%= el.id %>">Edit</a> - <a href="/admin/delete/<%= el.id %>">Delete</a> - 
 					<% if(el.published) { %>
 					 <a href="/admin/unpublish/<%= el.id %>">Unpublish</a>
 					<% } else { %>
 					  <a href="/admin/publish/<%= el.id %>">Publish</a>
 					<% } %><br/>
-					<%= el.user.name %> - <span class="longdate"><%= el.date %></span>
+					<%= el.account.name %> - <span class="longdate"><%= el.date %></span>
 				</article>
 				<hr>
 			<% }); %>
