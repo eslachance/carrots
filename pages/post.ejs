@@ -1,10 +1,10 @@
 <%- include('blocks/header', {path}) %>
 <h1><%= article.title %></h1>
 
-				<div class="post-info"><%= article.user.name %> - <span class="longdate"><%= article.date %></span></div>
+				<div class="post-info"><%= article.account.name %> - <span class="longdate"><%= article.date %></span></div>
 				<article class="post">
 					<header><a href="/view/<%= article.id %>"><%= article.title %></a></header>
-					<main class="post"><%- article.content %></main>
+					<main class="post"><%- article.rendered %></main>
 					<footer class="post">
 					  <div class="post-actions">
 							<% if(auth.logged && auth.admin) { %>
@@ -16,7 +16,7 @@
 								<% } %><br/></nav>
 							<% } %>
 						</div>
-					  <div class="post-commentcount"><%= article.commentCount %> Comments</div>
+					  <div class="post-commentcount"><%= article.comments.length %> Comments</div>
 					</footer>
 				</article>
 				<div class="comments-wrapper">
@@ -32,7 +32,7 @@
 				<% } else { %>
 					<a href="/login">Login</a> or <a href="/register">Register</a> to post a comment.
 				<% } %>
-				<% comments.forEach(comment => {%>
+				<% article.comments.forEach(comment => {%>
 					<div class="comment-author"><%= comment.user %> - <span class="longdate comment-date"><%= comment.timestamp %></span></div>
 					<div class="comment-content"><%= comment.content %></div>
 				<% }); %>

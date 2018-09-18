@@ -1,12 +1,19 @@
-const Enmap = require("enmap");
+const Enmap = require("../enmap");
 const bcrypt = require("bcrypt");
 const marked = require("marked");
+const hat = require("hat");
 
 exports.users = new Enmap({ name: "users" });
 exports.articles = new Enmap({ name: "articles" });
 exports.comments = new Enmap({ name: "comments" });
 exports.logs = new Enmap({ name: "logs" });
 exports.settings = new Enmap({ name: "settings" });
+
+exports.generateToken = (username) => {
+  const token = hat();
+  this.users.set(username, token, "apiToken");
+  return token;
+};
 
 exports.login = (username, password) => {
   const user = this.users.get(username);
@@ -45,14 +52,15 @@ exports.getArticle = (id) => {
 };
 
 exports.getArticles = (publishedOnly = false) => {
-  let articles;
-  if (publishedOnly) {
-    articles = this.articles.filter(a => !!a.title && a.published);
-  } else {
-    articles = this.articles.filter(a => !!a.title);
-  }
+  const articles = publishedOnly ? this.articles.filter(a => a.published) : this.articles;
   const parsed = articles.keyArray().map(this.getArticle);
   return parsed;
+};
+
+exports.addArticle = (title, content, user, published = false) => {
+  const id = this.articles.autonum;
+  this.articles.set(id, { id, content, title, published, date: Date.now(), user });
+  return id;
 };
 
 exports.getComment = (id) => {
@@ -64,7 +72,7 @@ exports.getComment = (id) => {
 };
 
 exports.getComments = (article) => {
-  const comments = this.comments.filter(comment => !!comment.id && comment.parent === article);
+  const comments = this.comments.filter(comment => comment.parent === article);
   const parsed = comments.keyArray().map(this.getComment);
   return parsed;
 };

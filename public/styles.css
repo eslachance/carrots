@@ -97,10 +97,11 @@ input[type=text], input[type=password] {
   border-radius: 0; /* Remove corner curve */
   border: 2px solid #425E72; /* 2px color border */
   color: #425E72; /* White text */
-  height: 45px; /* Increase input height */
-  min-width: 300px;
+  height: 35px; /* Increase input height */
+  min-width: 450px;
   padding: 0 10px;
   margin-top: 0;
+  font-size: 1.1em;
 }
 
 ::-webkit-input-placeholder { /* WebKit, Blink, Edge */

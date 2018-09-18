@@ -17,6 +17,7 @@
     "enmap": "^4.1.2",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
+    "hat": "0.0.3",
     "helmet": "^3.13.0",
     "marked": "^0.5.0",
     "memorystore": "^1.6.0",

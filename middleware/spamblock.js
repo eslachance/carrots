@@ -6,7 +6,10 @@ const statuscodes = {
 
 const banned = [
   "/login.cgi",
-  "/wp_admin"
+  "/wp_admin",
+  "/testget",
+  "/phpMyAdmin",
+  "/manager"
 ];
 
 const bannedSet = new Set();

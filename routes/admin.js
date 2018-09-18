@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/logs", (req, res) => {
-  res.json(db.logs.filter(log => !!log.time).array());
+  res.json(db.logs.array());
 });
 
 app.get("/add", (req, res) => {

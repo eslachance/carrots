@@ -11,21 +11,11 @@ const app = express.Router();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  const articles = db.articles.filter(a => !!a.title && a.published).array();
-  articles.forEach(a => {
-    a.user = db.users.get(a.user);
-    a.content = marked(a.content);
-    a.commentCount = db.comments.filter(c => !!c.id && c.parent === a.id).size;
-  });
-  res.render(resolve(`${templateDir}${sep}index.ejs`), { path: req.originalUrl, articles, auth: req.session });
+  res.render(resolve(`${templateDir}${sep}index.ejs`), { path: req.originalUrl, articles: db.getArticles(true), auth: req.session });
 });
 
 app.get("/view/:id", (req, res) => {
-  const article = db.articles.get(req.params.id);
-  article.user = db.users.get(article.user);
-  article.commentCount = db.comments.filter(c => !!c.id && c.parent === article.id).size;
-  const comments = db.comments.filter(comment => comment.parent === article.id);
-  res.render(resolve(`${templateDir}${sep}post.ejs`), { path: req.originalUrl, article, comments, auth: req.session });
+  res.render(resolve(`${templateDir}${sep}post.ejs`), { path: req.originalUrl, article: db.getArticle(req.params.id), auth: req.session });
 });
 
 module.exports = app;

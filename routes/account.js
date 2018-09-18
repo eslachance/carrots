@@ -14,9 +14,9 @@ app.use(express.json());
 app.get(["/user/:id", "/user"], (req, res) => {
   const user = db.users.get(req.params.id || req.session.username);
   if (!user) return res.redirect("/login");
-  const comments = db.comments.filter(comment => !!comment.id && comment.user === user.username);
-  const articles = db.articles.filter(article => !!article.id && article.user === user.username);
-  res.render(resolve(`${templateDir}${sep}user.ejs`), { path: req.path, user, articles, comments, auth: req.session });
+  const comments = db.comments.filter(comment => comment.user === user.username);
+  const articles = db.articles.filter(article => article.user === user.username);
+  return res.render(resolve(`${templateDir}${sep}user.ejs`), { path: req.path, user, articles, comments, auth: req.session });
 });
 
 app.get("/register", (req, res) => {
@@ -56,6 +56,14 @@ app.get("/logout", (req, res) => {
     if (err) console.log(`Error destroying session: ${err}`);
     res.redirect("/");
   });
+});
+
+app.get("/me", (req, res) => {
+  if (!req.session.logged) return res.redirect("/login");
+  const user = db.users.get(req.session.username);
+  const comments = db.comments.filter(comment => comment.user === user.username);
+  const articles = db.articles.filter(article => article.user === user.username);
+  return res.render(resolve(`${templateDir}${sep}me.ejs`), { path: req.path, user, comments, articles, auth: req.session });
 });
 
 // Initial Install Features
