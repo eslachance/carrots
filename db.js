@@ -1,4 +1,4 @@
-const Enmap = require("../enmap");
+const Enmap = require("enmap");
 const bcrypt = require("bcrypt");
 const marked = require("marked");
 const hat = require("hat");
