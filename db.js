@@ -1,4 +1,4 @@
-const Enmap = require("../enmap");
+const Enmap = require("enmap");
 const bcrypt = require("bcrypt");
 const marked = require("marked");
 const hat = require("hat");
@@ -103,7 +103,7 @@ function scorePassword(pass) {
 
   let variationCount = 0;
   for (var check in variations) {
-    variationCount += (variations[check] == true) ? 1 : 0;
+    variationCount += variations[check] == true ? 1 : 0;
   }
   score += (variationCount - 1) * 10;
 
