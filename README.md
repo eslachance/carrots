@@ -1,5 +1,4 @@
-# Enmap-Express (work in progress)
-*This is a tentative name that will change*
+# Carrots (work in progress)
 
 This package started out as a very simple way for me to test & prove that Enmap was easy to use an integrate into an express.js app. 
 The best way, I thought, to do this, was to write a blog platform. So I started doing that. And then I wrote an admin for it. Then
@@ -10,20 +9,23 @@ is pretty basic, the wording of the templates is not-funny-to-passive-agressive,
 a blog platform. But, it's at least secure enough (passwords are salted, hashed, bcrypted, the API is token-secured, etc), and stable
 enough, that it's useable in its current state.
 
+> **Carrots?** If you plop in "Lorem ipsum dolor sit amet" into Google Translate, it translates to... Lorem ipsum carrots. I found this
+> funny... And so I took it. :D
+
 ## Pre-Requisites
 
-Enmap-Express uses `enmap` for data storage, which is a wrapper around better-sqlite3. Thus, the data is in fact stored in sqlite.
+Carrots uses `enmap` for data storage, which is a wrapper around better-sqlite3. Thus, the data is in fact stored in sqlite.
 But, as with any sqlite module on node, it requires a build system to work. Rather than reproduce my enmap docs here, let me point
 you to [the pre-requisites docs](https://enmap.evie.codes/install#pre-requisites). Please follow the instructions in the tabbed box
 for your operating system, then come back here.
 
 ## Getting and Installing
 
-To install Enmap-Express, once the pre-requisites are properly installed, open a new command prompt and type the following commands:
+To install Carrots, once the pre-requisites are properly installed, open a new command prompt and type the following commands:
 
 ```
-git clone https://github.com/eslachance/enmap-express.git
-cd enmap-express
+git clone https://github.com/eslachance/carrots.git
+cd Carrots
 npm install
 ```
 
