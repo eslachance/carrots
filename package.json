@@ -1,13 +1,21 @@
 {
-  "name": "enmap-express",
-  "version": "1.0.0",
+  "name": "carrots",
+  "version": "0.1.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
-  "author": "",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eslachance/carrots.git"
+  },
+  "bugs": {
+    "url": "https://github.com/eslachance/carrots/issues"
+  },
+  "homepage": "https://github.com/eslachance/carrots#readme",
+  "keywords": ["nodejs", "blog", "api"],
+  "author": "Evelyne Lachance",
   "license": "Apache2.0",
   "dependencies": {
     "bcrypt": "^3.0.0",
