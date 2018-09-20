@@ -62,9 +62,9 @@ app.use(async (req, res, next) => {
 
 // General Logging Task
 app.use((req, res, next) => {
-  console.log(`${req.clientIp} : ${req.originalUrl} : ${Date.now()}`);
+  console.log(`${db.formatDate(Date.now())} | ${req.clientIp} | ${req.originalUrl}`);
   db.logs.set(db.logs.autonum, {
-    time: Date.now(),
+    time: db.formatDate(Date.now()),
     agent: req.headers["user-agent"],
     ip: req.clientIp,
     page: req.originalUrl
