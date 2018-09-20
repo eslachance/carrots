@@ -1,4 +1,4 @@
-<%- include('blocks/header', {path}) %>
+<%- include('blocks/header', {path, auth, settings}) %>
 <h1><%= article.title %></h1>
 
 				<div class="post-info"><%= article.account.name %> - <span class="longdate"><%= article.date %></span></div>

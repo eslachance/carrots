@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="An Express.js blog using Enmap for storage">
-    <meta name="author" content="Évelyne Lachance">
+    <meta name="author" content="<%- settings.author %>">
 
     <!-- Styling and basic things -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet">
@@ -22,7 +22,7 @@
     <!-- App styles -->
     <link rel="stylesheet" href="/public/styles.css?v=1.0">
 
-		<title>Title</title>
+		<title><%- settings.title %></title>
 	</head>
   <body>
   <a name="top"></a>
@@ -30,7 +30,7 @@
     <div class="box header">
       <div class="branding">
         <div class="logo"></div>
-        <div class="title"><a href="/">Blog Name</a></div>
+        <div class="title"><a href="/"><%- settings.title %></a></div>
       </div>
       <div class="navigation">
         <ul>
@@ -48,8 +48,7 @@
     <div class="box sidebar">
       <% if(path.includes("admin") && auth.admin) { %>
         <%- include('../blocks/admin-sidebar', {path, auth}) %>
-      <% } else { %>
-      sidebar
       <% } %>
+      <%- include('../blocks/user-sidebar', {path, auth}) %>
     </div>
     <div class="box content">

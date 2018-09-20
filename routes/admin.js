@@ -9,7 +9,7 @@ const app = express.Router();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.render(resolve(`${templateDir}${sep}admin${sep}index.ejs`), { path: req.originalUrl, articles: db.getArticles(false), auth: req.session });
+  res.render(resolve(`${templateDir}${sep}admin${sep}index.ejs`), { path: req.originalUrl, settings: req.settings, articles: db.getArticles(false), auth: req.session });
 });
 
 app.get("/logs", (req, res) => {
@@ -17,7 +17,7 @@ app.get("/logs", (req, res) => {
 });
 
 app.get("/add", (req, res) => {
-  res.render(resolve(`${templateDir}${sep}admin${sep}addpost.ejs`), { path: req.originalUrl, auth: req.session });
+  res.render(resolve(`${templateDir}${sep}admin${sep}addpost.ejs`), { path: req.originalUrl, settings: req.settings, auth: req.session });
 });
 
 app.post("/add", (req, res) => {
@@ -33,7 +33,7 @@ app.post("/add", (req, res) => {
 });
 
 app.get("/adduser", (req, res) => {
-  res.render(resolve(`${templateDir}${sep}admin${sep}adduser.ejs`), { path: req.originalUrl, auth: req.session });
+  res.render(resolve(`${templateDir}${sep}admin${sep}adduser.ejs`), { path: req.originalUrl, settings: req.settings, auth: req.session });
 });
 
 app.post("/adduser", (req, res) => {
@@ -57,10 +57,10 @@ app.get("/unpublish/:id", (req, res) => {
 
 app.get("/edit/:id", (req, res) => {
   const article = db.articles.get(req.params.id);
-  res.render(resolve(`${templateDir}${sep}admin${sep}editpost.ejs`), { path: req.originalUrl, article, auth: req.session });
+  res.render(resolve(`${templateDir}${sep}admin${sep}editpost.ejs`), { path: req.originalUrl, settings: req.settings, article, auth: req.session });
 });
 
-app.post("/edit/", (req, res) => {
+app.post("/edit", (req, res) => {
   const article = db.articles.get(req.body.id);
   article.published = !!req.body.published;
   article.content = req.body.content;
@@ -68,6 +68,20 @@ app.post("/edit/", (req, res) => {
   db.articles.set(req.body.id, article);
   // db.articles.set(req.params.id, "Edited Title", "title");
   res.redirect(`/admin/edit/${req.body.id}`);
+});
+
+app.get("/settings", (req, res) => {
+  res.render(resolve(`${templateDir}${sep}admin${sep}settings.ejs`), { path: req.originalUrl, settings: req.settings, auth: req.session });
+});
+
+app.post("/settings", (req, res) => {
+  ["title", "description", "author"].forEach(field => {
+    db.settings.set(field, req.body[field]);
+  });
+  db.settings.set("init", true);
+  db.settings.set("commentsEnabled", req.body.enableComments === "on");
+  db.settings.set("registrationEnabled", req.body.enableRegistration === "on");
+  return res.redirect("/admin/settings");
 });
 
 module.exports = app;

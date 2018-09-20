@@ -22,7 +22,6 @@ app.use((req, res, next) => {
 });
 
 app.post("/newarticle", (req, res) => {
-  console.log(req.body);
   const article = req.body;
   // (title, content, user, published = false)
   if (!article.title || !article.content) {

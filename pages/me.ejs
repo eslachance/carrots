@@ -1,6 +1,5 @@
-<%- include('blocks/header', {path}) %>
+<%- include('blocks/header', {path, auth, settings}) %>
 <h1><%= user.name %></h1>
-<% console.log(user) %>
 			<form method="POST" action="/register">
       <fieldset>
         <legend>Account Settings</legend>

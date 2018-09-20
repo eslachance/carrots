@@ -43,14 +43,25 @@ app.use(bodyParser.urlencoded({
 const requestIp = require("request-ip");
 app.use(requestIp.mw());
 
-// Custom botnet check
-app.use(require("./middleware/spamblock.js"));
-
 app.engine("html", require("ejs").renderFile);
 app.set("view engine", "html");
 
+// Custom botnet check
+app.use(require("./middleware/spamblock.js"));
+
+// Attach Settings to Req
+app.use(async (req, res, next) => {
+  await db.settings.defer;
+  const settings = {};
+  for (const [key, value] of db.settings) {
+    settings[key] = value;
+  }
+  req.settings = settings;
+  next();
+});
+
+// General Logging Task
 app.use((req, res, next) => {
-  // General Logging Task
   console.log(`${req.clientIp} : ${req.originalUrl} : ${Date.now()}`);
   db.logs.set(db.logs.autonum, {
     time: Date.now(),
@@ -59,7 +70,8 @@ app.use((req, res, next) => {
     page: req.originalUrl
   });
   // Set "previous" URL to session (for after logging)
-  if (!req.originalUrl.includes("/login") && !req.originalUrl.includes("/register") && !req.originalUrl.includes("/adduser")) {
+  const notsaved = ["/includes", "/register", "/adduser", "/favicon.ico"];
+  if (!notsaved.some(path => req.originalUrl.includes(path))) {
     req.session.back = req.url;
   }
   next();

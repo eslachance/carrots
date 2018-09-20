@@ -1,4 +1,4 @@
-<%- include('blocks/header', {path, auth}) %>
+<%- include('blocks/header', {path, auth, settings}) %>
 			<% articles.forEach(el => {%>
 				<div class="post-info"><a href="/user/<%= el.user.username %>"><%= el.account.name %></a> - <span class="longdate"><%= el.date %></span></div>
 				<article class="post">

@@ -1,5 +1,4 @@
 const { sep, resolve } = require("path");
-const marked = require("marked");
 
 const dataDir = resolve(`${process.cwd()}${sep}`);
 const templateDir = resolve(`${dataDir}${sep}pages`);
@@ -11,11 +10,11 @@ const app = express.Router();
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  res.render(resolve(`${templateDir}${sep}index.ejs`), { path: req.originalUrl, articles: db.getArticles(true), auth: req.session });
+  res.render(resolve(`${templateDir}${sep}index.ejs`), { path: req.originalUrl, auth: req.session, settings: req.settings, articles: db.getArticles(true) });
 });
 
 app.get("/view/:id", (req, res) => {
-  res.render(resolve(`${templateDir}${sep}post.ejs`), { path: req.originalUrl, article: db.getArticle(req.params.id), auth: req.session });
+  res.render(resolve(`${templateDir}${sep}post.ejs`), { path: req.originalUrl, auth: req.session, settings: req.settings, article: db.getArticle(req.params.id) });
 });
 
 module.exports = app;

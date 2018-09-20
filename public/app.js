@@ -4,7 +4,6 @@ $(function(){
   for(var i = 0; i < dates.length; i++) {
     var elem = dates.item(i).textContent;
     var date = moment(Number(elem)).fromNow();
-    console.log(date);
     dates.item(i).innerHTML = date;
   }
 

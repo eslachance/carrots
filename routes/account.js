@@ -16,11 +16,11 @@ app.get(["/user/:id", "/user"], (req, res) => {
   if (!user) return res.redirect("/login");
   const comments = db.comments.filter(comment => comment.user === user.username);
   const articles = db.articles.filter(article => article.user === user.username);
-  return res.render(resolve(`${templateDir}${sep}user.ejs`), { path: req.path, user, articles, comments, auth: req.session });
+  return res.render(resolve(`${templateDir}${sep}user.ejs`), { path: req.path, settings: req.settings, user, articles, comments, auth: req.session });
 });
 
 app.get("/register", (req, res) => {
-  res.render(resolve(`${templateDir}${sep}register.ejs`), { path: req.path, auth: req.session });
+  res.render(resolve(`${templateDir}${sep}register.ejs`), { path: req.path, settings: req.settings, auth: req.session });
 });
 
 app.post("/register", (req, res) => {
@@ -29,7 +29,7 @@ app.post("/register", (req, res) => {
 });
 
 app.get("/login", (req, res) => {
-  res.render(resolve(`${templateDir}${sep}login.ejs`), { path: req.path, auth: req.session });
+  res.render(resolve(`${templateDir}${sep}login.ejs`), { path: req.path, settings: req.settings, auth: req.session });
 });
 
 app.post("/login", async (req, res) => {
@@ -43,7 +43,7 @@ app.post("/login", async (req, res) => {
     req.session.avatar = user.avatar;
     req.session.name = user.name;
     req.session.save();
-    console.log("User authenticated");
+    console.log(`User authenticated: ${user.username}`);
     res.redirect(req.session.back || "/");
   } else {
     console.log("Authentication Failed");
@@ -63,7 +63,7 @@ app.get("/me", (req, res) => {
   const user = db.users.get(req.session.username);
   const comments = db.comments.filter(comment => comment.user === user.username);
   const articles = db.articles.filter(article => article.user === user.username);
-  return res.render(resolve(`${templateDir}${sep}me.ejs`), { path: req.path, user, comments, articles, auth: req.session });
+  return res.render(resolve(`${templateDir}${sep}me.ejs`), { path: req.path, settings: req.settings, user, comments, articles, auth: req.session });
 });
 
 // Initial Install Features
@@ -73,7 +73,12 @@ app.get("/install", (req, res, next) => {
     res.status(403).send("ALREADY INITIALIZED, GO AWAY PUNY HUMAN!");
     return next();
   }
-  res.render(resolve(`${templateDir}${sep}install.ejs`), { path: req.path, auth: req.session });
+  const settings = {
+    title: "Blog Title",
+    description: "A blog full of pure awesomeness",
+    author: "Your Name Here"
+  };
+  res.render(resolve(`${templateDir}${sep}install.ejs`), { path: req.path, settings: req.settings, auth: req.session, settings });
   return next();
 });
 
@@ -82,7 +87,6 @@ app.post("/install", (req, res, next) => {
     res.status(403).send("ALREADY INITIALIZED, GO AWAY PUNY HUMAN!");
     return next();
   }
-  console.log(req.body);
   const checks = ["username", "password", "title", "description", "author"];
   if (checks.some(field => req.body[field].length < 3)) {
     return res.status(400).send("Field information missing to create the site.");
@@ -115,7 +119,7 @@ app.post("/install", (req, res, next) => {
       date: Date.now()
     });
   }
-  return res.send("ok");
+  return res.redirect("/");
 });
 
 module.exports = app;
