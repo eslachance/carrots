@@ -68,14 +68,14 @@ app.get("/me", (req, res) => {
 
 // Initial Install Features
 
-app.get("/install", (req, res, next) => {
+app.get("/install", (req, res) => {
   if (db.settings.count > 0 || db.users.count > 0) {
     return res.status(403).send("ALREADY INITIALIZED, GO AWAY PUNY HUMAN!");
   }
   return res.render(resolve(`${templateDir}${sep}install.ejs`), { path: req.path, settings: req.settings, auth: req.session });
 });
 
-app.post("/install", (req, res, next) => {
+app.post("/install", (req, res) => {
   if (db.settings.count > 0 || db.users.count > 0) {
     return res.status(403).send("ALREADY INITIALIZED, GO AWAY PUNY HUMAN!");
   }

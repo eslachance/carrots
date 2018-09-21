@@ -55,6 +55,11 @@ app.get("/unpublish/:id", (req, res) => {
   res.redirect("/admin");
 });
 
+app.get("/delete/:id", (req, res) => {
+  db.articles.delete(req.params.id);
+  res.redirect("/admin");
+});
+
 app.get("/edit/:id", (req, res) => {
   const article = db.articles.get(req.params.id);
   res.render(resolve(`${templateDir}${sep}admin${sep}editpost.ejs`), { path: req.originalUrl, settings: req.settings, article, auth: req.session });
