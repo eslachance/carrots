@@ -70,22 +70,14 @@ app.get("/me", (req, res) => {
 
 app.get("/install", (req, res, next) => {
   if (db.settings.count > 0 || db.users.count > 0) {
-    res.status(403).send("ALREADY INITIALIZED, GO AWAY PUNY HUMAN!");
-    return next();
+    return res.status(403).send("ALREADY INITIALIZED, GO AWAY PUNY HUMAN!");
   }
-  const settings = {
-    title: "Blog Title",
-    description: "A blog full of pure awesomeness",
-    author: "Your Name Here"
-  };
-  res.render(resolve(`${templateDir}${sep}install.ejs`), { path: req.path, settings: req.settings, auth: req.session, settings });
-  return next();
+  return res.render(resolve(`${templateDir}${sep}install.ejs`), { path: req.path, settings: req.settings, auth: req.session });
 });
 
 app.post("/install", (req, res, next) => {
   if (db.settings.count > 0 || db.users.count > 0) {
-    res.status(403).send("ALREADY INITIALIZED, GO AWAY PUNY HUMAN!");
-    return next();
+    return res.status(403).send("ALREADY INITIALIZED, GO AWAY PUNY HUMAN!");
   }
   const checks = ["username", "password", "title", "description", "author"];
   if (checks.some(field => req.body[field].length < 3)) {

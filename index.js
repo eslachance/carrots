@@ -52,12 +52,25 @@ app.use(require("./middleware/spamblock.js"));
 // Attach Settings to Req
 app.use(async (req, res, next) => {
   await db.settings.defer;
-  const settings = {};
-  for (const [key, value] of db.settings) {
-    settings[key] = value;
+  let settings = {};
+  if (db.settings.has("title")) {
+    for (const [key, value] of db.settings) {
+      settings[key] = value;
+    }
+  } else {
+    settings = {
+      title: "Blog Title",
+      description: "A blog full of pure awesomeness",
+      author: "Your Name Here",
+      init: false
+    };
+    if (!req.originalUrl.includes("/install")) {
+      req.settings = settings;
+      return res.redirect("/install");
+    }
   }
   req.settings = settings;
-  next();
+  return next();
 });
 
 // General Logging Task
