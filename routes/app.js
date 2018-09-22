@@ -17,4 +17,9 @@ app.get("/view/:id", (req, res) => {
   res.render(resolve(`${templateDir}${sep}post.ejs`), { path: req.originalUrl, auth: req.session, settings: req.settings, article: db.getArticle(req.params.id) });
 });
 
+app.get("/random", (req, res) => {
+  const rand = db.articles.randomKey();
+  res.render(resolve(`${templateDir}${sep}post.ejs`), { path: req.originalUrl, auth: req.session, settings: req.settings, article: db.getArticle(rand) });
+});
+
 module.exports = app;
