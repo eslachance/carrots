@@ -66,6 +66,21 @@ app.get("/me", (req, res) => {
   return res.render(resolve(`${templateDir}${sep}me.ejs`), { path: req.path, settings: req.settings, user, comments, articles, auth: req.session });
 });
 
+app.post("/me", async (req, res) => {
+  if (!req.session.logged) return res.redirect("/login");
+  if (!db.users.has(req.session.username)) throw new Error("Shroedinger's User. You both exist and don't exist at the same time. How curious!");
+  if(!req.session.admin && req.body.admin === "on") {
+    throw new Error("Oh yeah, sure, I'm going to let a non-admin make themselves admin. SURE, BUDDY, TAKE CONTROL OF THIS BLOG! /s");
+  }
+  await db.edituser({
+    ...req.body,
+    username: req.session.username,
+    admin: req.body.admin === "on",
+  });
+  req.session.name = req.body.name;
+  res.redirect(req.session.back || "/");
+});
+
 // Initial Install Features
 
 app.get("/install", (req, res) => {

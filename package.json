@@ -23,15 +23,15 @@
   "license": "Apache2.0",
   "dependencies": {
     "bcrypt": "^3.0.0",
-    "better-sqlite-pool": "^0.1.2",
+    "better-sqlite3": "^5.4.3",
     "connect-sqlite3": "^0.9.11",
     "ejs": "^2.6.1",
-    "enmap": "^4.3.0",
+    "enmap": "^5.1.2",
     "express": "^4.16.3",
     "express-session": "^1.15.6",
     "hat": "0.0.3",
     "helmet": "^3.13.0",
-    "marked": "^0.5.0",
+    "marked": "^0.7.0",
     "request-ip": "^2.1.1",
     "xss": "^1.0.3"
   },

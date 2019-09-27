@@ -76,6 +76,7 @@ app.use(async (req, res, next) => {
 // General Logging Task
 app.use((req, res, next) => {
   console.log(`${db.formatDate(Date.now())} | ${req.clientIp} | ${req.originalUrl}`);
+  console.log(`User is admin? ${req.session && req.session.admin}`);
   db.logs.set(db.logs.autonum, {
     time: db.formatDate(Date.now()),
     agent: req.headers["user-agent"],

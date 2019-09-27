@@ -1,7 +1,9 @@
 const Enmap = require("enmap");
+const { promisify } = require("util");
 const bcrypt = require("bcrypt");
 const marked = require("marked");
 const hat = require("hat");
+const hash = promisify(bcrypt.hash);
 
 exports.users = new Enmap({ name: "users" });
 exports.articles = new Enmap({ name: "articles" });
@@ -23,7 +25,7 @@ exports.login = (username, password) => {
 };
 
 exports.newuser = (username, name, plainpw, admin = false) => {
-  if (this.users.has(username)) throw Error(`User ${username} already exists!`);
+  if (this.users.has(username)) throw new Error(`User ${username} already exists!`);
   const score = scorePassword(plainpw);
   if (score < 30) throw new Error(`Your password is too weak, and cannot be used.`);
   bcrypt.hash(plainpw, 10, (err, password) => {
@@ -32,6 +34,39 @@ exports.newuser = (username, name, plainpw, admin = false) => {
       username, name, password, admin, avatar: null, created: Date.now()
     });
   });
+};
+
+exports.edituser = async (props) => {
+  const { username, newpw, name, avatar, admin} = props;
+  console.log(props);
+  if (!this.users.has(username)) throw new Error(`User ${username} is invalid. What're you trying to pull here, buddy?`);
+  if(newpw) {
+    const score = scorePassword(newpw);
+    if (score < 30) throw new Error(`Your password is too weak, and cannot be used.`);
+    const hashed = await hash(newpw, 10);
+    this.users.set(username, { 
+      ... this.users.get(username),
+      ... {
+        username,
+        hashed,
+        name,
+        avatar,
+        admin,
+      }
+    });
+    return true;
+  } else {
+    this.users.set(username, { 
+      ... this.users.get(username),
+      ... {
+        username,
+        name,
+        avatar,
+        admin,
+      }
+    });
+    return true;
+  }
 };
 
 exports.getCleanUser = (username) => {
