@@ -1,4 +1,4 @@
-const { sep, resolve } = require("path");
+const { sep, resolve, join } = require("path");
 const http = require("http");
 // const https = require("https");
 
@@ -23,21 +23,29 @@ const app = express();
 app.use(express.json());
 app.use("/public", express.static(resolve(`${dataDir}${sep}public`)));
 
+app.get("/favicon.ico", (_req, res) => {
+  res.sendFile(join(__dirname, "./public/favicon.ico"));
+});
+
+app.get("/robots.txt", (_req, res) => {
+  res.sendFile(join(__dirname, "./public/robots.txt"));
+});
+
 app.use(session({
   store: new SQLiteStore({
-    dir: "./data"
+    dir: "./data",
   }),
   secret: config.secret,
   cookie: { maxAge: 14 * 24 * 60 * 60 * 1000 },
   resave: false,
-  saveUninitialized: false
+  saveUninitialized: false,
 }));
 
 app.use(helmet());
 const bodyParser = require("body-parser");
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: true
+  extended: true,
 }));
 
 const requestIp = require("request-ip");
@@ -62,7 +70,7 @@ app.use(async (req, res, next) => {
       title: "Blog Title",
       description: "A blog full of pure awesomeness",
       author: "Your Name Here",
-      init: false
+      init: false,
     };
     if (!req.originalUrl.includes("/install")) {
       req.settings = settings;
@@ -74,17 +82,16 @@ app.use(async (req, res, next) => {
 });
 
 // General Logging Task
-app.use((req, res, next) => {
+app.use((req, _res, next) => {
   console.log(`${db.formatDate(Date.now())} | ${req.clientIp} | ${req.originalUrl}`);
-  console.log(`User is admin? ${req.session && req.session.admin}`);
   db.logs.set(db.logs.autonum, {
     time: db.formatDate(Date.now()),
     agent: req.headers["user-agent"],
     ip: req.clientIp,
-    page: req.originalUrl
+    page: req.originalUrl,
   });
   // Set "previous" URL to session (for after logging)
-  const notsaved = ["/includes", "/register", "/adduser", "/favicon.ico"];
+  const notsaved = ["/includes", "/register", "/adduser", "/favicon.ico", "/login"];
   if (!notsaved.some(path => req.originalUrl.includes(path))) {
     req.session.back = req.url;
   }
@@ -111,7 +118,7 @@ app.use((req, res) => {
 });
 
 // Handle 500
-app.use((error, req, res) => {
+app.use((_error, _req, res) => {
   res.send("500: Internal Server Error", 500);
 });
 

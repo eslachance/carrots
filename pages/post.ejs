@@ -20,6 +20,10 @@
 					</footer>
 				</article>
 				<div class="comments-wrapper">
+				<% article.comments.forEach(comment => {%>
+					<div class="comment-author"><%= comment.user %> - <span class="longdate comment-date"><%= comment.timestamp %></span></div>
+					<div class="comment-content"><%= comment.content %></div>
+				<% }); %>
 				<% if(auth.logged) { %>
 					<div class="add-comment">
 						<form action="/addcomment" method="POST">
@@ -32,9 +36,5 @@
 				<% } else { %>
 					<a href="/login">Login</a> or <a href="/register">Register</a> to post a comment.
 				<% } %>
-				<% article.comments.forEach(comment => {%>
-					<div class="comment-author"><%= comment.user %> - <span class="longdate comment-date"><%= comment.timestamp %></span></div>
-					<div class="comment-content"><%= comment.content %></div>
-				<% }); %>
 
 <% include ./blocks/footer %>

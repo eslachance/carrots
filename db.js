@@ -31,39 +31,39 @@ exports.newuser = (username, name, plainpw, admin = false) => {
   bcrypt.hash(plainpw, 10, (err, password) => {
     if (err) throw err;
     this.users.set(username, {
-      username, name, password, admin, avatar: null, created: Date.now()
+      username, name, password, admin, avatar: null, created: Date.now(),
     });
   });
 };
 
 exports.edituser = async (props) => {
-  const { username, newpw, name, avatar, admin} = props;
+  const { username, newpw, name, avatar, admin } = props;
   console.log(props);
   if (!this.users.has(username)) throw new Error(`User ${username} is invalid. What're you trying to pull here, buddy?`);
-  if(newpw) {
+  if (newpw) {
     const score = scorePassword(newpw);
     if (score < 30) throw new Error(`Your password is too weak, and cannot be used.`);
     const hashed = await hash(newpw, 10);
-    this.users.set(username, { 
-      ... this.users.get(username),
-      ... {
+    this.users.set(username, {
+      ...this.users.get(username),
+      ...{
         username,
         hashed,
         name,
         avatar,
         admin,
-      }
+      },
     });
     return true;
   } else {
-    this.users.set(username, { 
-      ... this.users.get(username),
-      ... {
+    this.users.set(username, {
+      ...this.users.get(username),
+      ...{
         username,
         name,
         avatar,
         admin,
-      }
+      },
     });
     return true;
   }
@@ -107,7 +107,8 @@ exports.getComment = (id) => {
 };
 
 exports.getComments = (article) => {
-  const comments = this.comments.filter(comment => comment.parent === article);
+  console.log(article, typeof article);
+  const comments = this.comments.filter(comment => comment.parent === Number(article));
   const parsed = comments.keyArray().map(this.getComment);
   return parsed;
 };
@@ -145,11 +146,11 @@ function scorePassword(pass) {
     digits: /\d/.test(pass),
     lower: /[a-z]/.test(pass),
     upper: /[A-Z]/.test(pass),
-    nonWords: /\W/.test(pass)
+    nonWords: /\W/.test(pass),
   };
 
   let variationCount = 0;
-  for (let check in variations) {
+  for (const check in variations) {
     variationCount += variations[check] == true ? 1 : 0;
   }
   score += (variationCount - 1) * 10;

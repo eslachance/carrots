@@ -67,9 +67,9 @@ app.get("/me", (req, res) => {
 });
 
 app.post("/me", async (req, res) => {
-  if (!req.session.logged) return res.redirect("/login");
+  if (!req.session.logged) res.redirect("/login");
   if (!db.users.has(req.session.username)) throw new Error("Shroedinger's User. You both exist and don't exist at the same time. How curious!");
-  if(!req.session.admin && req.body.admin === "on") {
+  if (!req.session.admin && req.body.admin === "on") {
     throw new Error("Oh yeah, sure, I'm going to let a non-admin make themselves admin. SURE, BUDDY, TAKE CONTROL OF THIS BLOG! /s");
   }
   await db.edituser({
@@ -115,7 +115,7 @@ app.post("/install", (req, res) => {
       title: "This is a test post because who wants an empty page?",
       published: true,
       date: Date.now(),
-      user: req.body.username
+      user: req.body.username,
     });
     const cmt = db.comments.autonum;
     db.comments.set(cmt, {
@@ -123,7 +123,7 @@ app.post("/install", (req, res) => {
       parent: one,
       content: "FUN FACT! : 'Lorem ipsum dolor sit amet' translates to 'Lorem ipsum carrots' on Google Translate!",
       user: req.body.username,
-      date: Date.now()
+      date: Date.now(),
     });
   }
   return res.redirect("/");

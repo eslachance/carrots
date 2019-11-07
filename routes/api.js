@@ -31,7 +31,7 @@ app.post("/newarticle", (req, res) => {
   const id = db.addArticle(data.title, data.content, data.user, data.published == null ? false : data.published);
   return res.json({
     id,
-    url: `/view/${id}`
+    url: `/view/${id}`,
   });
 });
 

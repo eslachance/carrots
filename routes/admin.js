@@ -8,6 +8,16 @@ const templateDir = resolve(`${dataDir}${sep}pages`);
 const app = express.Router();
 app.use(express.json());
 
+const clean = async (text) => {
+  if (text && text.constructor.name == "Promise") {
+    text = await text;
+  }
+  if (typeof evaled !== "string") {
+    text = require("util").inspect(text, { depth: 2 });
+  }
+  return text;
+};
+
 app.get("/", (req, res) => {
   res.render(resolve(`${templateDir}${sep}admin${sep}index.ejs`), { path: req.originalUrl, settings: req.settings, articles: db.getArticles(false), auth: req.session });
 });
@@ -27,7 +37,7 @@ app.post("/add", (req, res) => {
     title: req.body.title,
     published: false,
     date: Date.now(),
-    user: req.session.username
+    user: req.session.username,
   });
   res.redirect(`/admin/edit/${id}`);
 });
@@ -73,6 +83,20 @@ app.post("/edit", (req, res) => {
   db.articles.set(req.body.id, article);
   // db.articles.set(req.params.id, "Edited Title", "title");
   res.redirect(`/admin/edit/${req.body.id}`);
+});
+
+app.get("/eval", (req, res) => {
+  res.render(resolve(`${templateDir}${sep}admin${sep}eval.ejs`), { path: req.originalUrl, settings: req.settings, auth: req.session, evaled: "", code: "" });
+});
+
+app.post("/eval", async (req, res) => {
+  let evaled;
+  try {
+    evaled = await clean(eval(req.body.code));
+  } catch (err) {
+    evaled = err;
+  }
+  res.render(resolve(`${templateDir}${sep}admin${sep}eval.ejs`), { path: req.originalUrl, settings: req.settings, auth: req.session, evaled, code: req.body.code });
 });
 
 app.get("/settings", (req, res) => {

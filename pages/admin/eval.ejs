@@ -1,0 +1,12 @@
+<%- include('../blocks/header', {path, auth, settings}) %>
+			<h2>Eval Stuff</h2>
+			<form method="POST" action="/admin/eval">
+      <div>
+        <label for="code">
+          <textarea id="code" name="code"><%= code %></textarea>
+        </label>
+      </div>
+      <button type="submit" class="pretty-button">Evaluate</button>
+      </form>
+      <pre><code><%= evaled %></code></pre>
+<% include ../blocks/footer %>

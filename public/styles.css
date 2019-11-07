@@ -234,3 +234,26 @@ footer.post {
 .post-actions {
   float: right;
 }
+
+pre {
+	box-sizing: border-box;
+	width: 100%;
+	padding: 0;
+	margin: 0;
+	overflow-y: scroll;
+	font-size: 12px;
+	line-height: 20px;
+	background: #ccc;
+	border: 1px solid #777;
+	padding: 10px;
+	color: #333;
+	max-height: 425px;
+	max-width: 1000px;
+}
+
+pre code {
+	white-space: pre-wrap;
+	padding: 10px;
+	overflow-x: scroll;
+	color: #333;
+}
