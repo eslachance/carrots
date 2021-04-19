@@ -33,10 +33,10 @@ textarea {
 }
 
 .branding {
-  float: left;
   height: 100%;
   font-size: 2em;
   color: #5D5C61;
+  float: left;
 }
 
 .sidebar {
@@ -256,4 +256,15 @@ pre code {
 	padding: 10px;
 	overflow-x: scroll;
 	color: #333;
+}
+
+#footlogo {
+  width: 25px;
+  height: 25px;
+  float: right;
+}
+
+#toplogo {
+  width: 40px;
+  height: 40px;
 }

@@ -7,16 +7,20 @@ const statuscodes = {
 const banned = [
   "/login.cgi",
   "/wp_admin",
+  "/wp-includes/",
   "/testget",
   "/phpMyAdmin",
-  "/manager"
+  "/manager",
+  "/wp-login.php",
+  "/.git/HEAD",
+  "/wallet.dat",
 ];
 
 const bannedSet = new Set();
 
 module.exports = (req, res, next) => {
   if (bannedSet.has(req.clientIp)) {
-    return res.redirect(301, "http://www.silverraven.com/fy.htm");
+    return res.redirect(301, "https://imgur.com/gallery/KS9w4");
   }
   if (banned.some(p => req.originalUrl.includes(p))) {
     const codes = Object.entries(statuscodes);

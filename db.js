@@ -10,6 +10,7 @@ exports.articles = new Enmap({ name: "articles" });
 exports.comments = new Enmap({ name: "comments" });
 exports.logs = new Enmap({ name: "logs" });
 exports.settings = new Enmap({ name: "settings" });
+exports.referals = new Enmap("referals");
 
 exports.generateToken = (username) => {
   const token = hat();
@@ -38,7 +39,6 @@ exports.newuser = (username, name, plainpw, admin = false) => {
 
 exports.edituser = async (props) => {
   const { username, newpw, name, avatar, admin } = props;
-  console.log(props);
   if (!this.users.has(username)) throw new Error(`User ${username} is invalid. What're you trying to pull here, buddy?`);
   if (newpw) {
     const score = scorePassword(newpw);
@@ -107,7 +107,6 @@ exports.getComment = (id) => {
 };
 
 exports.getComments = (article) => {
-  console.log(article, typeof article);
   const comments = this.comments.filter(comment => comment.parent === Number(article));
   const parsed = comments.keyArray().map(this.getComment);
   return parsed;
